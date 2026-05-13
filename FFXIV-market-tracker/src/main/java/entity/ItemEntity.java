@@ -24,6 +24,10 @@ public class ItemEntity {
     private String itemName;
     private String iconUrl;
 
+    private Boolean canBeHQ;
+    private Integer stackSize;
+    private Integer vendorPrice;
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 }

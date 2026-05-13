@@ -2,6 +2,7 @@ package entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -14,12 +15,13 @@ import java.time.LocalDateTime;
 @Builder
 public class PriceSnapshotsEntity {
 
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch= FetchType.LAZY)
     @JoinColumn(name="item_id")
-    private Integer itemId;
+    private ItemEntity item;
 
     private String world;
     private BigDecimal avgPrice;
@@ -27,6 +29,13 @@ public class PriceSnapshotsEntity {
     private BigDecimal maxPrice;
     private Integer listingCount;
     private Integer volumeSold;
+
+    private BigDecimal avgPriceNq;     // Universalis gives HQ/NQ averages separately
+    private BigDecimal avgPriceHq;
+    private Long lastUploadTime;       // Unix epoch from Universalis — when data was last pushed
+
+
+    @CreationTimestamp
     private LocalDateTime capturedAt;
 
 }

@@ -25,6 +25,10 @@ public class UserEntity {
 
     private String email;
 
+    private String homeWorld;          // defaults Universalis queries to their server
+    private String passwordHash;       // unless you're using OAuth only
+
+
     @CreationTimestamp
     private LocalDateTime createdAt;
 }

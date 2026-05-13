@@ -21,20 +21,35 @@ public class PriceAlertsEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="user_id", nullable=false)
-    private UserEntity userId;
+    private UserEntity user;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="item_id",nullable = false)
-    private ItemEntity itemId;
+    private ItemEntity item;
 
     private String world;
-    private String condition;
+
+    @Enumerated(EnumType.STRING)
+    private AlertCondition condition;
+
     private BigDecimal targetPrice;
+
+    private Boolean isHq;                  // alert on HQ price, NQ price, or either?
+    private LocalDateTime lastTriggeredAt; // rename from triggeredAt — can fire multiple times
+    private Integer triggerCount;          // nice-to-have for portfolio: shows alert history
+
+
     @Column(nullable = false,columnDefinition = "boolean default true")
     private boolean isActive;
+
     private LocalDateTime triggeredAt;
     private LocalDateTime createdAt;
 
+    public enum AlertCondition {
+        BELOW, ABOVE
+    }
 }
+
+
