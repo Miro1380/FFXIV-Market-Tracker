@@ -19,12 +19,12 @@ public class ItemEntity {
 
     @Id
     @Column(name="item_id")
-    private Integer itemId;
+    private Long itemId;
 
     private String itemName;
     private String iconUrl;
 
-    private Boolean canBeHQ;
+    private Boolean canBeHq;
     private Integer stackSize;
     private Integer vendorPrice;
 
