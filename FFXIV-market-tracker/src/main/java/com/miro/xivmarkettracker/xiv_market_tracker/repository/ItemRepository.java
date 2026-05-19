@@ -1,8 +1,6 @@
-package repository;
+package com.miro.xivmarkettracker.xiv_market_tracker.repository;
 
-import entity.ItemEntity;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
+import com.miro.xivmarkettracker.xiv_market_tracker.entity.ItemEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ItemRepository extends JpaRepository<ItemEntity,Long> {

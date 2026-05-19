@@ -1,4 +1,4 @@
-package entity;
+package com.miro.xivmarkettracker.xiv_market_tracker.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

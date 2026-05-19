@@ -1,4 +1,4 @@
-package DTO;
+package com.miro.xivmarkettracker.xiv_market_tracker.DTO;
 
 import lombok.Builder;
 import lombok.Data;

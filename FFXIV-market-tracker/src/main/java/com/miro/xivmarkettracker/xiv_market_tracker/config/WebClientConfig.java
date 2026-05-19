@@ -1,4 +1,4 @@
-package client;
+package com.miro.xivmarkettracker.xiv_market_tracker.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

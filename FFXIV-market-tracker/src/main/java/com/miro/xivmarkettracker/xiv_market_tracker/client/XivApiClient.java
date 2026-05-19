@@ -1,6 +1,6 @@
-package client;
+package com.miro.xivmarkettracker.xiv_market_tracker.client;
 
-import DTO.XivApiItemResponse;
+import com.miro.xivmarkettracker.xiv_market_tracker.DTO.XivApiItemResponse;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -16,7 +16,7 @@ public class XivApiClient {
 
     public Mono<XivApiItemResponse> getItem(Integer itemId){
         return xivapiClient.get()
-                .uri("/item/{id}")
+                .uri("/item/{id}",itemId)
                 .retrieve()
                 .onStatus(HttpStatusCode::is4xxClientError,response ->
                         Mono.error(new RuntimeException("Item not found: "+ itemId)))

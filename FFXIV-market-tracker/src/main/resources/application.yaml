@@ -1,4 +1,6 @@
 spring:
+  main:
+    web-application-type: servlet
   datasource:
     url: jdbc:postgresql://localhost:5432/xiv_market
     username: ${DB_USERNAME}
@@ -14,3 +16,7 @@ spring:
 
 server:
   port: 8080
+
+logging:
+  level:
+    org.springframework.web: DEBUG

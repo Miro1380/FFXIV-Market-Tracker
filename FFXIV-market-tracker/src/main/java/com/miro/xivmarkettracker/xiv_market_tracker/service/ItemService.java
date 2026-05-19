@@ -1,17 +1,13 @@
-package service;
+package com.miro.xivmarkettracker.xiv_market_tracker.service;
 
-import DTO.ItemResponseDTO;
-import DTO.XivApiItemResponse;
-import client.XivApiClient;
-import entity.ItemEntity;
-import lombok.AllArgsConstructor;
-import lombok.NoArgsConstructor;
-import lombok.RequiredArgsConstructor;
+import com.miro.xivmarkettracker.xiv_market_tracker.DTO.ItemResponseDTO;
+import com.miro.xivmarkettracker.xiv_market_tracker.DTO.XivApiItemResponse;
+import com.miro.xivmarkettracker.xiv_market_tracker.client.XivApiClient;
+import com.miro.xivmarkettracker.xiv_market_tracker.entity.ItemEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.GetMapping;
-import repository.ItemRepository;
+import com.miro.xivmarkettracker.xiv_market_tracker.repository.ItemRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -40,6 +36,13 @@ public class ItemService {
 
     public Optional<ItemResponseDTO> getItem(Long itemId){
         return itemRepository.findById(itemId).map(this:: toItemResponseDTO);
+    }
+
+    public List<ItemResponseDTO> getItems(){
+        return itemRepository.findAll()
+                .stream()
+                .map(this::toItemResponseDTO)
+                .toList();
     }
 
     public ItemResponseDTO toItemResponseDTO(ItemEntity itemEntity){

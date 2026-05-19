@@ -1,4 +1,4 @@
-package DTO;
+package com.miro.xivmarkettracker.xiv_market_tracker.DTO;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,7 +20,7 @@ public class XivApiItemResponse {
     @JsonProperty("CanBeHq")
     private Boolean canBeHQ;
 
-    @JsonProperty("stackSize")
+    @JsonProperty("StackSize")
     private Integer stackSize;
 
     @JsonProperty("PriceLow")
