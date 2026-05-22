@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -38,13 +39,15 @@ public class PriceAlertsEntity {
 
     private Boolean isHq;                  // alert on HQ price, NQ price, or either?
     private LocalDateTime lastTriggeredAt; // rename from triggeredAt — can fire multiple times
-    private Integer triggerCount;          // nice-to-have for portfolio: shows alert history
+
+    @Builder.Default
+    private Integer triggerCount = 0;         // nice-to-have for portfolio: shows alert history
 
 
     @Column(nullable = false,columnDefinition = "boolean default true")
     private boolean isActive;
 
-    private LocalDateTime triggeredAt;
+    @CreationTimestamp
     private LocalDateTime createdAt;
 
     public enum AlertCondition {

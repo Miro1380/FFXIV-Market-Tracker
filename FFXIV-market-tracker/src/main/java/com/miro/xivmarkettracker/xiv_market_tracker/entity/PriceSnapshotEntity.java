@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PriceSnapshotsEntity {
+public class PriceSnapshotEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -38,6 +38,7 @@ public class ItemController {
         return ResponseEntity.ok(itemResponseDTO);
     }
 
+    //Gets all data from db. Not for use.
     @GetMapping("/all")
     public ResponseEntity<List<ItemResponseDTO>> getItems(){
         log.info("Getting all items. Not ideal");
@@ -47,4 +48,6 @@ public class ItemController {
         }
         return ResponseEntity.ok(items);
     }
+
+    //Get data from universalis?
 }
