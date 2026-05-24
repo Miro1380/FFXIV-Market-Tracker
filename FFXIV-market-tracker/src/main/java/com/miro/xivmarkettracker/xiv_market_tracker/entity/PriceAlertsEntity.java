@@ -37,7 +37,7 @@ public class PriceAlertsEntity {
 
     private BigDecimal targetPrice;
 
-    private Boolean isHq;                  // alert on HQ price, NQ price, or either?
+    private Boolean isHq;                  // The type of item the alert is referencing. Hq or Nq? Needed to check correct field.
     private LocalDateTime lastTriggeredAt; // rename from triggeredAt — can fire multiple times
 
     @Builder.Default

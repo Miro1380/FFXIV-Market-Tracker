@@ -1,6 +1,7 @@
 package com.miro.xivmarkettracker.xiv_market_tracker.entity;
 
 import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
@@ -8,6 +9,12 @@ import java.time.LocalDateTime;
 @Entity
 @Table(name = "tracked_items",
         uniqueConstraints = @UniqueConstraint(columnNames = {"user_id", "item_id", "world"}))
+
+@Getter
+@Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class TrackedItemEntity {
 
     @Id
