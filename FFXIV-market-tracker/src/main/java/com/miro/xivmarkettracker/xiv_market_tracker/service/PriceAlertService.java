@@ -6,20 +6,19 @@ import com.miro.xivmarkettracker.xiv_market_tracker.entity.ItemEntity;
 import com.miro.xivmarkettracker.xiv_market_tracker.entity.PriceAlertsEntity;
 import com.miro.xivmarkettracker.xiv_market_tracker.entity.PriceSnapshotEntity;
 import com.miro.xivmarkettracker.xiv_market_tracker.entity.UserEntity;
+import com.miro.xivmarkettracker.xiv_market_tracker.exceptions.ResourceNotFoundException;
 import com.miro.xivmarkettracker.xiv_market_tracker.repository.ItemRepository;
 import com.miro.xivmarkettracker.xiv_market_tracker.repository.PriceAlertRepo;
 import com.miro.xivmarkettracker.xiv_market_tracker.repository.PriceSnapshotRepository;
 import com.miro.xivmarkettracker.xiv_market_tracker.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 @Service
 @RequiredArgsConstructor
@@ -31,10 +30,10 @@ public class PriceAlertService {
 
     public PriceAlertResponseDTO createAlert(PriceAlertRequestDTO dto){
         UserEntity user = userRepository.findById(dto.getUserId())
-                .orElseThrow(() -> new RuntimeException("User Id not found: "+ dto.getUserId()));
+                .orElseThrow(() -> new ResourceNotFoundException("User Id not found: "+ dto.getUserId()));
 
         ItemEntity item = itemRepository.findById(dto.getItemId())
-                .orElseThrow(() -> new RuntimeException("Item id not found: "+ dto.getItemId()));
+                .orElseThrow(() -> new ResourceNotFoundException("Item id not found: "+ dto.getItemId()));
 
         PriceAlertsEntity entity = PriceAlertsEntity.builder()
                 .user(user)
@@ -64,10 +63,10 @@ public class PriceAlertService {
 
     public List<PriceAlertResponseDTO> checkAlerts(Long itemId, String world){
         //Use entities for service, return dto's on controller
-        ItemEntity item = itemRepository.findById(itemId).orElseThrow(() -> new RuntimeException("Item not found: "+ itemId));
+        ItemEntity item = itemRepository.findById(itemId).orElseThrow(() -> new ResourceNotFoundException("Item not found: "+ itemId));
 
         PriceSnapshotEntity snapshot = priceSnapshotRepository.findTopByItemAndWorldOrderByCapturedAtDesc(item,world)
-                .orElseThrow(() -> new RuntimeException("Item snapshot not found: "+ item));
+                .orElseThrow(() -> new ResourceNotFoundException("Item snapshot not found: "+ item));
 
         List<PriceAlertsEntity> activeAlerts = priceAlertRepo.findByItemAndWorldAndIsActiveTrue(item, world);
 

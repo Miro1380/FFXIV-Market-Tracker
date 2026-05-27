@@ -29,6 +29,7 @@ public class PriceAlertController {
 
     @DeleteMapping("/{alertId}")
     ResponseEntity<Void> deleteAlert(@PathVariable Long alertId){
+        priceAlertService.deleteAlert(alertId);
         return ResponseEntity.noContent().build();
     }
 

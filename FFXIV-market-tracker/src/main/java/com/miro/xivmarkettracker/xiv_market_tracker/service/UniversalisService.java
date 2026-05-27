@@ -5,6 +5,7 @@ import com.miro.xivmarkettracker.xiv_market_tracker.DTO.UniversalisApiItemRespon
 import com.miro.xivmarkettracker.xiv_market_tracker.client.UniversalisApiClient;
 import com.miro.xivmarkettracker.xiv_market_tracker.entity.ItemEntity;
 import com.miro.xivmarkettracker.xiv_market_tracker.entity.PriceSnapshotEntity;
+import com.miro.xivmarkettracker.xiv_market_tracker.exceptions.ResourceNotFoundException;
 import com.miro.xivmarkettracker.xiv_market_tracker.repository.ItemRepository;
 import com.miro.xivmarkettracker.xiv_market_tracker.repository.PriceSnapshotRepository;
 import lombok.RequiredArgsConstructor;
@@ -26,7 +27,7 @@ public class UniversalisService {
         //Query db or get seed
         //Look up in universalis using
         ItemEntity item = itemRepository.findById(itemId)
-                .orElseThrow(() -> new RuntimeException("Item not found"+ itemId));
+                .orElseThrow(() -> new ResourceNotFoundException("Item not found"+ itemId));
 
         UniversalisApiItemResponse response = universalisApiClient.getItem(world,itemId);
 
@@ -49,7 +50,7 @@ public class UniversalisService {
     //Get the item and pass that item to the snapshot repo. Return a list of price snapshot DTO
     public List<PriceSnapshotResponseDTO> getHistory(Long itemId, String world){
         ItemEntity item = itemRepository.findById(itemId)
-                .orElseThrow(() -> new RuntimeException("Item not found: "+ itemId));
+                .orElseThrow(() -> new ResourceNotFoundException("Item not found: "+ itemId));
         return snapshotRepository.findByItemAndWorldOrderByCapturedAtDesc(item,world)
                 .stream()
                 .map(this::toPriceSnapshotDTO)
