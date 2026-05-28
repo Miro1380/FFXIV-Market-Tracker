@@ -12,6 +12,7 @@ import com.miro.xivmarkettracker.xiv_market_tracker.service.ItemService;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*")
 @Component
 @RestController
 @RequestMapping("/api/items")
