@@ -1,5 +1,6 @@
 package com.miro.xivmarkettracker.xiv_market_tracker.DTO;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -13,6 +14,8 @@ public class TrackedItemResponseDTO {
     private Long itemId;
     private String world;
     private String itemName;
+
+    @JsonProperty("isTracking")
     private boolean isTracking;
     private LocalDateTime createdAt;
 }
