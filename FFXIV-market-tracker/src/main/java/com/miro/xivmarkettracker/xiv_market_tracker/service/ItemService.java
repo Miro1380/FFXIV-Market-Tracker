@@ -27,6 +27,14 @@ public class ItemService {
     //Create an ItemResponse DTO to send back to controller and build.
     // Block for simplicity. TODO.
     public ItemResponseDTO seedItem(Integer itemId){
+
+        //Check to see if key is already in db
+        Optional<ItemEntity> item = itemRepository.findById(Long.valueOf(itemId));
+        if(item.isPresent()){
+            return toItemResponseDTO(item.get());
+        }
+
+        //Not in db, fetch from xivapi and save
         return xivApiClient.getItem(itemId)
                 .map(this::toItemEntity)
                 .map(itemRepository::save)

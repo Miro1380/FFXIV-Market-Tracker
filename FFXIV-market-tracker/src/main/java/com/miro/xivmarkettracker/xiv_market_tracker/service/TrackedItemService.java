@@ -93,6 +93,7 @@ public class TrackedItemService {
                 .userId(entity.getUser().getId())
                 .itemId(entity.getItem().getItemId())
                 .itemName(entity.getItem().getItemName())
+                .iconUrl(entity.getItem().getIconUrl())
                 .world(entity.getWorld())
                 .isTracking(entity.isTracking())
                 .createdAt(entity.getCreatedAt())
