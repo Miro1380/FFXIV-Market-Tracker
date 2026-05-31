@@ -1,5 +1,6 @@
 package com.miro.xivmarkettracker.xiv_market_tracker.exceptions;
 
+import com.miro.xivmarkettracker.xiv_market_tracker.DTO.TrackedItemResponseDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -21,5 +22,10 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(RuntimeException.class)
     public ResponseEntity<String> handleGeneral(RuntimeException ex){
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+    }
+
+    @ExceptionHandler(DuplicateTrackedItemException.class)
+    public ResponseEntity<TrackedItemResponseDTO> handleDuplicate(DuplicateTrackedItemException ex){
+        return ResponseEntity.ok(ex.getDTO());
     }
 }

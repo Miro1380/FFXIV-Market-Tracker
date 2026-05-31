@@ -5,17 +5,21 @@ import com.miro.xivmarkettracker.xiv_market_tracker.DTO.TrackedItemResponseDTO;
 import com.miro.xivmarkettracker.xiv_market_tracker.entity.ItemEntity;
 import com.miro.xivmarkettracker.xiv_market_tracker.entity.TrackedItemEntity;
 import com.miro.xivmarkettracker.xiv_market_tracker.entity.UserEntity;
+import com.miro.xivmarkettracker.xiv_market_tracker.exceptions.DuplicateTrackedItemException;
 import com.miro.xivmarkettracker.xiv_market_tracker.exceptions.ResourceNotFoundException;
 import com.miro.xivmarkettracker.xiv_market_tracker.exceptions.UnauthorizedException;
 import com.miro.xivmarkettracker.xiv_market_tracker.repository.ItemRepository;
 import com.miro.xivmarkettracker.xiv_market_tracker.repository.TrackedItemRepository;
 import com.miro.xivmarkettracker.xiv_market_tracker.repository.UserRepository;
+import com.sun.jdi.request.DuplicateRequestException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 
+import javax.sound.midi.Track;
 import java.util.List;
+import java.util.Optional;
 
 
 @Service
@@ -30,8 +34,25 @@ public class TrackedItemService {
 
     //Add TrackedItem
     public TrackedItemResponseDTO addTrackedItem(TrackedItemRequestDTO dto){
+        //FOR DEBUG
+        log.info("Checking for existing tracked item: userId={}, itemId={}, world={}",
+                dto.getUserId(), dto.getItemId(), dto.getWorld());
+        //
+
         ItemEntity item = itemRepository.findById(dto.getItemId()).orElseThrow(() -> new ResourceNotFoundException("Item not found: "+ dto.getItemId()));
         UserEntity user = userRepository.findById(dto.getUserId()).orElseThrow(() -> new ResourceNotFoundException("User not found: "+ dto.getUserId()));
+
+        //Check DB for Previous entry. Return it if found.
+        Optional<TrackedItemEntity> existing = trackedItemRepository.findByUserIdAndItemItemIdAndWorld(dto.getUserId(),dto.getItemId(),dto.getWorld());
+        if(existing.isPresent()){
+            //Reactivate Items. TODO
+            TrackedItemEntity entity = existing.get();
+            if(!entity.isTracking()){
+                entity.setTracking(true);
+                return toResponseDTO(trackedItemRepository.save(entity));
+            }
+            throw new DuplicateTrackedItemException(toResponseDTO(existing.get()));
+        }
 
         //Bind data to entity and save in repo
         TrackedItemEntity entity = TrackedItemEntity.builder()

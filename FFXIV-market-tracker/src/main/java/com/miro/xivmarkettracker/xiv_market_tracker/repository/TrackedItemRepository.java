@@ -14,5 +14,6 @@ public interface TrackedItemRepository extends JpaRepository<TrackedItemEntity,L
     List<TrackedItemEntity> findByIsTrackingTrue();
     List<TrackedItemEntity> findByUser(UserEntity user);
     List<TrackedItemEntity> findByUserAndIsTrackingTrue(UserEntity user);
+    Optional<TrackedItemEntity> findByUserIdAndItemItemIdAndWorld(Long userId, Long itemId, String world);
     //TrackedItemEntity findByUser();
 }
