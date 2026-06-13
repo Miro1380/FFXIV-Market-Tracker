@@ -15,6 +15,7 @@ public class TrackedItemResponseDTO {
     private String world;
     private String itemName;
     private String iconUrl;
+    private Boolean canBeHq;
     @JsonProperty("isTracking")
     private boolean isTracking;
     private LocalDateTime createdAt;

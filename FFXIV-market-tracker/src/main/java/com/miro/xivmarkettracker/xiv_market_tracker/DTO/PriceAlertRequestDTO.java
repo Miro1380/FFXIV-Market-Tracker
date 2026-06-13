@@ -12,6 +12,6 @@ public class PriceAlertRequestDTO {
     private Long itemId;
     private String world;
     private BigDecimal targetPrice;
-    private PriceAlertsEntity.AlertCondition condition;
+    private PriceAlertsEntity.AlertCondition alertCondition;
     private Boolean isHq;
 }

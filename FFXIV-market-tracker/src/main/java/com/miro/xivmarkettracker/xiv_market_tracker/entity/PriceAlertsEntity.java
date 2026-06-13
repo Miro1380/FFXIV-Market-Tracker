@@ -33,7 +33,7 @@ public class PriceAlertsEntity {
     private String world;
 
     @Enumerated(EnumType.STRING)
-    private AlertCondition condition;
+    private AlertCondition alertCondition;
 
     private BigDecimal targetPrice;
 

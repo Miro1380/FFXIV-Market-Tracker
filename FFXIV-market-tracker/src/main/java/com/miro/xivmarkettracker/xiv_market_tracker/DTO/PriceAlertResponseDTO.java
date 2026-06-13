@@ -1,5 +1,6 @@
 package com.miro.xivmarkettracker.xiv_market_tracker.DTO;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.miro.xivmarkettracker.xiv_market_tracker.entity.PriceAlertsEntity;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +17,9 @@ public class PriceAlertResponseDTO {
     private String itemName;
     private String world;
     private BigDecimal targetPrice;
-    private PriceAlertsEntity.AlertCondition condition;
+    private PriceAlertsEntity.AlertCondition alertCondition;
+
+    @JsonProperty("isHq")
     private boolean isHq;
     private Integer triggerCount;
     private Boolean isActive;

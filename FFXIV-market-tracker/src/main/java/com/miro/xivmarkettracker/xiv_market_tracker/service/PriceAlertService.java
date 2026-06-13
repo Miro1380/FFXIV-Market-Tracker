@@ -39,7 +39,7 @@ public class PriceAlertService {
                 .user(user)
                 .item(item)
                 .world(dto.getWorld())
-                .condition(dto.getCondition())
+                .alertCondition(dto.getAlertCondition())
                 .targetPrice(dto.getTargetPrice())
                 .isHq(dto.getIsHq())
                 .isActive(true)
@@ -83,9 +83,9 @@ public class PriceAlertService {
             //If the alert's condition is "Below" and the price is below the target, trigger it. Change state.
 
             boolean fires = false;
-            if(alert.getCondition() == PriceAlertsEntity.AlertCondition.BELOW && comparePrice.compareTo(alert.getTargetPrice()) < 0){
+            if(alert.getAlertCondition() == PriceAlertsEntity.AlertCondition.BELOW && comparePrice.compareTo(alert.getTargetPrice()) < 0){
                 fires = true;
-            }else if(alert.getCondition() == PriceAlertsEntity.AlertCondition.ABOVE && comparePrice.compareTo(alert.getTargetPrice()) > 0){
+            }else if(alert.getAlertCondition() == PriceAlertsEntity.AlertCondition.ABOVE && comparePrice.compareTo(alert.getTargetPrice()) > 0){
                 fires=true;
             }
 
@@ -108,7 +108,7 @@ public class PriceAlertService {
                 .itemName(entity.getItem().getItemName())
                 .world(entity.getWorld())
                 .targetPrice(entity.getTargetPrice())
-                .condition(entity.getCondition())
+                .alertCondition(entity.getAlertCondition())
                 .isHq(entity.getIsHq())
                 .triggerCount(entity.getTriggerCount())
                 .isActive(entity.isActive())

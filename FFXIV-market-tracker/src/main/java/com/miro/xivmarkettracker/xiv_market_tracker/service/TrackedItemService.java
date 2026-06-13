@@ -118,6 +118,7 @@ public class TrackedItemService {
                 .world(entity.getWorld())
                 .isTracking(entity.isTracking())
                 .createdAt(entity.getCreatedAt())
+                .canBeHq(entity.getItem().getCanBeHq())
                 .build();
     }
 
