@@ -30,7 +30,7 @@ public class TrackedItemEntity {
     private ItemEntity item;
 
     private String world;
-    private boolean isTracking;
+    private Boolean isTracking;
 
     @CreationTimestamp
     private LocalDateTime createdAt;

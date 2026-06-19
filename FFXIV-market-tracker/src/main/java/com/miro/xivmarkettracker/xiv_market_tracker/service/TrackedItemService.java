@@ -47,8 +47,8 @@ public class TrackedItemService {
         if(existing.isPresent()){
             //Reactivate Items. TODO
             TrackedItemEntity entity = existing.get();
-            if(!entity.isTracking()){
-                entity.setTracking(true);
+            if(!entity.getIsTracking()){
+                entity.setIsTracking(true);
                 return toResponseDTO(trackedItemRepository.save(entity));
             }
             throw new DuplicateTrackedItemException(toResponseDTO(existing.get()));
@@ -89,7 +89,7 @@ public class TrackedItemService {
         if(!entity.getUser().getId().equals(user.getId())){
             throw new UnauthorizedException("Unauthorized");
         }
-        entity.setTracking(!entity.isTracking());
+        entity.setIsTracking(!entity.getIsTracking());
         trackedItemRepository.save(entity);
     }
 
@@ -116,7 +116,7 @@ public class TrackedItemService {
                 .itemName(entity.getItem().getItemName())
                 .iconUrl(entity.getItem().getIconUrl())
                 .world(entity.getWorld())
-                .isTracking(entity.isTracking())
+                .isTracking(entity.getIsTracking())
                 .createdAt(entity.getCreatedAt())
                 .canBeHq(entity.getItem().getCanBeHq())
                 .build();
