@@ -58,6 +58,8 @@ public class PriceAlertService {
     }
 
     public void deleteAlert(Long id){
+        priceAlertRepo.findById(id)
+                .orElseThrow( () -> new ResourceNotFoundException("Alert Id not found"));
         priceAlertRepo.deleteById(id);
     }
 

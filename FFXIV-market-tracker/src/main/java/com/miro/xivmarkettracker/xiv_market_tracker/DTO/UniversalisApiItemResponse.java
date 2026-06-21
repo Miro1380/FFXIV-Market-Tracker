@@ -2,10 +2,12 @@ package com.miro.xivmarkettracker.xiv_market_tracker.DTO;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.Builder;
 import lombok.Data;
 
 import java.math.BigDecimal;
 
+@Builder
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class UniversalisApiItemResponse {

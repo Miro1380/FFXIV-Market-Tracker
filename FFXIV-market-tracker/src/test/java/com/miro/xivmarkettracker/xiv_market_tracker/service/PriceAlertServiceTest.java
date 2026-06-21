@@ -26,8 +26,7 @@ import java.util.Optional;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 public class PriceAlertServiceTest {
@@ -142,5 +141,36 @@ public class PriceAlertServiceTest {
 
         assertThat(response).isNotNull();
         assertThat(response).size().isEqualTo(1);
+    }
+
+    @Test
+    @DisplayName("Delete Alert: void return, uses Id of price Alert")
+    void deleteAlert_validId(){
+        UserEntity user = UserEntity.builder().id(2L).build();
+        ItemEntity item = ItemEntity.builder().itemId(23L).build();
+
+        PriceAlertsEntity alertsEntity = PriceAlertsEntity.builder()
+                .user(user)
+                .item(item)
+                .isHq(true)
+                .world("Crystal")
+                .id(44L)
+                .build();
+
+        when(priceAlertRepo.findById(44L)).thenReturn(Optional.of(alertsEntity));
+
+        priceAlertService.deleteAlert(44L);
+
+        verify(priceAlertRepo, times(1)).deleteById(44L);
+    }
+
+    @Test
+    @DisplayName("Delete Alert: void return, uses alert id")
+    void deleteAlert_invalidId(){
+
+
+        when(priceAlertRepo.findById(23L)).thenReturn(Optional.empty());
+
+        assertThatThrownBy( () -> priceAlertService.deleteAlert(23L)).isInstanceOf(ResourceNotFoundException.class);
     }
 }
