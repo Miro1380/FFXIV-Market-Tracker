@@ -5,6 +5,7 @@ import com.miro.xivmarkettracker.xiv_market_tracker.DTO.PriceAlertResponseDTO;
 import com.miro.xivmarkettracker.xiv_market_tracker.entity.ItemEntity;
 import com.miro.xivmarkettracker.xiv_market_tracker.entity.PriceAlertsEntity;
 import com.miro.xivmarkettracker.xiv_market_tracker.entity.UserEntity;
+import com.miro.xivmarkettracker.xiv_market_tracker.exceptions.ResourceNotFoundException;
 import com.miro.xivmarkettracker.xiv_market_tracker.repository.ItemRepository;
 import com.miro.xivmarkettracker.xiv_market_tracker.repository.PriceAlertRepo;
 import com.miro.xivmarkettracker.xiv_market_tracker.repository.PriceSnapshotRepository;
@@ -17,9 +18,13 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -80,5 +85,62 @@ public class PriceAlertServiceTest {
         assertThat(response.getWorld()).isEqualTo("Crystal");
         assertThat(response.isHq()).isTrue();
 
+    }
+
+   @Test
+   @DisplayName("Create Alert: invalid userId")
+   void createAlert_invalidUserId(){
+
+
+        when(userRepository.findById(2L)).thenReturn(Optional.empty());
+
+       PriceAlertRequestDTO request = PriceAlertRequestDTO.builder()
+               .userId(2L)
+               .itemId(23L)
+               .build();
+
+       assertThatThrownBy( () -> priceAlertService.createAlert(request)).isInstanceOf(ResourceNotFoundException.class);
+   }
+
+   @Test
+   @DisplayName("Get Alerts: gets all price alert, invalid id")
+   void getAlertsByUser_invalidId(){
+        UserEntity user = UserEntity.builder()
+                .id(2L)
+                .build();
+
+        when(priceAlertRepo.findByUserId(2L)).thenReturn(Collections.emptyList());
+
+        List<PriceAlertResponseDTO> list = priceAlertService.getAlertsByUser(user.getId());
+
+        assertThat(list).isEmpty();
+    }
+
+    @Test
+    @DisplayName("Get Alerts: gets all price alerts: valid id")
+    void getAlertsByUser_validId(){
+        UserEntity user = UserEntity.builder()
+                .id(2L)
+                .build();
+
+        ItemEntity item = ItemEntity.builder()
+                .itemId(23L)
+                .build();
+
+        PriceAlertsEntity alert = PriceAlertsEntity.builder()
+                .user(user)
+                .item(item)
+                .isHq(false)
+                .build();
+
+        List<PriceAlertsEntity> alertEntities = new ArrayList<>();
+        alertEntities.add(alert);
+
+        when(priceAlertRepo.findByUserId(2L)).thenReturn(alertEntities);
+
+        List<PriceAlertResponseDTO> response = priceAlertService.getAlertsByUser(2L);
+
+        assertThat(response).isNotNull();
+        assertThat(response).size().isEqualTo(1);
     }
 }
