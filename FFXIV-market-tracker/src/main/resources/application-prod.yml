@@ -10,4 +10,4 @@ spring:
     web-application-type: servlet
 
 server:
-  port: ${PORT:5432}   # Railway injects PORT dynamically
+  port: ${PORT:8080}   # Railway injects PORT dynamically
