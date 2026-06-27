@@ -1,0 +1,13 @@
+spring:
+  datasource:
+    url: ${DATABASE_URL}
+    username: ${PGUSER}
+    password: ${PGPASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate   # or none — don't use create-drop in prod
+  main:
+    web-application-type: servlet
+
+server:
+  port: ${PORT:8080}   # Railway injects PORT dynamically
