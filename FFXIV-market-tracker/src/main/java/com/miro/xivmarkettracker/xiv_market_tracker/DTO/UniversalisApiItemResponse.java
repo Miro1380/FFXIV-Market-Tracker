@@ -2,11 +2,15 @@ package com.miro.xivmarkettracker.xiv_market_tracker.DTO;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
