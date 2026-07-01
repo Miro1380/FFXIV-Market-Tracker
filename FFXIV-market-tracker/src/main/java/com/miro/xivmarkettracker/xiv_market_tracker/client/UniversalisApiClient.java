@@ -22,6 +22,4 @@ public class UniversalisApiClient {
                         .bodyToMono(UniversalisApiItemResponse.class)
                 .block();
     }
-
-
 }
