@@ -23,8 +23,8 @@ public class MarketScheduler {
     private final UniversalisService universalisService;
     private final PriceAlertService priceAlertService;
 
-    //Testing every 15 minutes
-    @Scheduled(fixedDelay = 900000)
+    //Testing every 60 minutes
+    @Scheduled(fixedDelay = 3600000)
     public void pollTrackedItems(){
         //Get all actively tracked items
         List<TrackedItemEntity> trackedItems = trackedItemRepository.findByIsTrackingTrue();
