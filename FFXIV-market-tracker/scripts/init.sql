@@ -10,10 +10,12 @@ CREATE TABLE IF NOT EXISTS items (
 
 CREATE TABLE IF NOT EXISTS users (
     id          BIGSERIAL PRIMARY KEY,
-    username    VARCHAR(255),
+    -- Username is the login handle. UNIQUE is enforced here rather than only
+    -- in the service, where a check-then-insert can be raced by two signups.
+    username    VARCHAR(255) NOT NULL UNIQUE,
     email       VARCHAR(255),
     home_world  VARCHAR(255),
-    password_hash VARCHAR(255),
+    password_hash VARCHAR(255) NOT NULL,
     created_at  TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
