@@ -21,11 +21,16 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    //Unique at the DB level, not just checked in the service: a check-then-insert
+    //can be raced by two concurrent registrations, the constraint can't be.
+    @Column(nullable = false, unique = true)
     private String username;
 
     private String email;
 
     private String homeWorld;          // defaults Universalis queries to their server
+
+    @Column(nullable = false)
     private String passwordHash;       // unless you're using OAuth only
 
 
