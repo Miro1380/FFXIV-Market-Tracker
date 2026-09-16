@@ -1,0 +1,7 @@
+# IntelliJ project config. Machine- and path-specific, so it churns on every
+# move or re-index and means nothing to another checkout.
+.idea/
+*.iml
+
+# macOS
+.DS_Store
